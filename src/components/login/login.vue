@@ -24,7 +24,7 @@
             <el-input class="input" v placeholder="请输入密码" v-model="loginData.pwd" show-password></el-input>
           </el-form-item>
           <el-form-item prop="submit">
-            <el-button class="button" type="success">登陆</el-button>
+            <el-button class="button" type="success" @click="submit">登陆</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -74,6 +74,10 @@ export default {
     {
       this.disabled = !this.disabled
 
+    },
+    submit(){
+      console.log(1)
+      this.$router.push({name: 'home'});
     }
   }
 };
