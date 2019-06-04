@@ -2,7 +2,7 @@
   <div class="container">
     <ul class="topbar">
       <li class="topItem">
-        <img style="height:58px" src="../../image/blmLogoSimple.png" alt>
+        <img style="height:33px;margin-top:12px;margin-right:20px;" src="../../image/blmLogoSimple.png" alt>
       </li>
       <li class="active topItem">
         <a href="#">首页</a>
