@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <home-page></home-page>
+    <login-page></login-page>
   </div>
 </template>
 <script>
-import homePage from "./components/home/home"
+import loginPage from "./components/login/login"
 export default {
   components:{
-    homePage,
+    loginPage,
   }
 }
 </script>
