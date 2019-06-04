@@ -1,9 +1,11 @@
 <template>
   <el-container class="content">
     <el-header height="100px">
-      <el-link target="_blank" :disabled = "!disabled" @click="goLogin">登陆</el-link>
-      |
-      <el-link target="_blank" :disabled = "disabled" @click="goSign">注册</el-link>
+      <div class="header">
+        <el-link target="_blank" :disabled = "!disabled" @click="goLogin">登陆</el-link>
+        |
+        <el-link target="_blank" :disabled = "disabled" @click="goSign">注册</el-link>
+      </div>
     </el-header>
     <el-main>
       <!-- 登陆表单 -->
@@ -83,6 +85,9 @@ a {
 }
 .container {
   height: 100%;
+}
+.header{
+  float: right;
 }
 .content {
   padding-top: 40px;
