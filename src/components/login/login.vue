@@ -1,8 +1,13 @@
 <template>
   <el-container class="content">
-    <el-header height="100px"></el-header>
+    <el-header height="100px">
+      <el-link target="_blank" :disabled = "!disabled" @click="goLogin">登陆</el-link>
+      |
+      <el-link target="_blank" :disabled = "disabled" @click="goSign">注册</el-link>
+    </el-header>
     <el-main>
-      <div class="main-body">
+      <!-- 登陆表单 -->
+      <div class="login" v-if="!disabled">
         <img style="width:220px" src="../../image/blmLogo.png" alt="eleme">
         <el-form
           :model="loginData"
@@ -21,6 +26,26 @@
           </el-form-item>
         </el-form>
       </div>
+      <!-- 注册表单 -->
+      <div class="sign" v-else>
+        <img style="width:220px" src="../../image/blmLogo.png" alt="eleme">
+        <el-form
+          :model="loginData"
+          :rules="rules"
+          ref="ruleForm"
+          label-width="0px"
+          class="loginForm">
+          <el-form-item prop="name">
+            <el-input class="input" v-model="loginData.name" placeholder="请输入用户名"></el-input>
+          </el-form-item>
+          <el-form-item prop="pwd">
+            <el-input class="input" v placeholder="请输入密码" v-model="loginData.pwd" show-password></el-input>
+          </el-form-item>
+          <el-form-item prop="submit">
+            <el-button class="button" type="success">完成注册</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -28,6 +53,7 @@
 export default {
   data() {
     return {
+      disabled:false,
       loginData: {
         name: "",
         pwd: ""
@@ -37,6 +63,16 @@ export default {
         pwd: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
+  },
+  methods:{
+    goLogin:function(){
+      this.disabled = !this.disabled
+    },
+    goSign:function()
+    {
+      this.disabled = !this.disabled
+
+    }
   }
 };
 </script>
@@ -60,7 +96,10 @@ a {
   color: #fff;
   margin-top: 30px;
 }
-.main-body {
+.login {
+  text-align: center;
+}
+.sign {
   text-align: center;
 }
 .loginForm {
