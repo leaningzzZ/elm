@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="topbar">
     <tab></tab>
   </div>
 </template>
@@ -12,5 +12,12 @@ export default {
 }
 </script>
 <style scoped>
-
+.topbar{
+  width: 100%;
+  background-color:#1e89e0
+}
+.container{
+  width:1260px;
+  margin: 0 auto;
+}
 </style>
