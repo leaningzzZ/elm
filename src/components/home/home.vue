@@ -1,13 +1,18 @@
 <template>
-  <div class="topbar">
+    <div>
+        <div class="topbar">
     <tab></tab>
   </div>
+    <home-body class="homeBody"></home-body>
+    </div>
 </template>
 <script>
 import tab from "../tab/tab"
+import homeBody from "./homeBody"
 export default {
   components:{
-    tab
+    tab,
+    homeBody
   }
 }
 </script>
@@ -19,5 +24,7 @@ export default {
 .container{
   width:1260px;
   margin: 0 auto;
+
 }
+
 </style>

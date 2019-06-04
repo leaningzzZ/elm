@@ -1,0 +1,169 @@
+<template>
+    <el-container class="container">
+        <el-header class="header">
+            <div class="location">
+                <span style="color:#999999">当前位置：</span>西安邮电大学长安校区
+            </div>
+            <div class="search">
+                <el-input 
+                    placeholder="搜索商家,美食..."
+                    prefix-icon="el-icon-search"
+                    size="small"
+                    v-model="search">
+                </el-input>
+            </div>
+        </el-header>
+        <el-main>
+            <div class="content">
+                <div class="sort">
+                    <span>商家分类:</span>
+                    <el-link class="type" v-for="item in sortData" :key="item.id" target="_blank">{{item}}</el-link>
+                </div>
+                <div class="rstBox">
+                    <div class="rstBlock" v-for="item in rstData" :key="item.id">
+                        <div class="rstName">{{item.name}}</div>
+                        <div class="rstStar">
+                            <el-rate
+                                v-model="item.star"
+                                disabled
+                                show-score
+                                text-color="#ff9900">
+                            </el-rate>
+                        </div>
+                        <div class="rstPic">
+                            <img :src="item.logo" alt="">
+                        </div>
+                        <div class="rstSort">{{item.sort}}</div>
+                        <div class="rstDesc">{{item.desc}}</div>
+                        <div class="rstDeliveryTime">{{item.delivery.time}}</div>
+                        <div class="rstDeliveryPrice">{{item.delivery.price}}</div>
+                        <div class="rstType">{{item.type}}</div>
+                    </div>
+                </div>
+            </div>
+        </el-main>
+    </el-container>
+</template>
+<script>
+export default {
+    data() {
+        return {
+        search: '',
+        sortData:["全部商家","美食","快餐便当","特色菜系","异国料理","小吃夜宵","甜品饮品","果蔬生鲜","商店超市","鲜花绿植"
+        ,"医药健康","早餐","午餐","下午茶","晚餐","夜宵"],
+        rstData: [
+        {
+          name: "袁记肉夹馍", //商家名称
+          id: 123, //商家ID，根据ID查询商家商品
+          logo: "//fuss10.elemecdn.com/f/01/64bfb5b626d7fe626f503aff8c42fpng.png?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
+          sort: "快餐便当", //分类：美食 快餐便当 特色菜系 异国料理 小吃夜宵 甜品饮品 果蔬生鲜 商店超市 鲜花绿植 医药健康 早餐 午餐 下午茶 晚餐夜宵
+          star: 4.8, //评分星级
+          desc: "", //商家描述
+          delivery: {
+            //配送信息：配送费，配送时间
+            price: 0.1,
+            time: 32
+          },
+          type: ["pei"] // 保，票，赔
+        },
+        {
+          name: "乐宣老长沙龙虾馆(国色天香店)", //商家名称
+          id: 456, //商家ID，根据ID查询商家商品
+          logo: "//fuss10.elemecdn.com/9/be/8ebac070b443fc77b99d176f4749apng.png?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
+          sort: "美食", //分类：美食 快餐便当 特色菜系 异国料理 小吃夜宵 甜品饮品 果蔬生鲜 商店超市 鲜花绿植 医药健康 早餐 午餐 下午茶 晚餐夜宵
+          star: 4.9, //评分星级
+          desc: "【乐宣—地道长沙味】订餐须知：1.确保您的电话畅通以保证送餐员及时联系您 2.如遇到特殊情况要取消订餐,请联系门店3.用餐高峰时段及天气恶劣的情况下,送餐时间不能保证,但承诺您会尽快送到 4.有任何建议请联系029-84192007", //商家描述
+          delivery: {
+            //配送信息：配送费，配送时间
+            price: 6,
+            time: 38
+          },
+          type: [] // 保，票，赔
+        },
+        {
+          name: "白纸王川湘菜", //商家名称
+          id: 456, //商家ID，根据ID查询商家商品
+          logo: "//fuss10.elemecdn.com/5/6f/d20254e5861009f9145c9bb5a08e9jpeg.jpeg?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
+          sort: "特色菜系", //分类：美食 快餐便当 特色菜系 异国料理 小吃夜宵 甜品饮品 果蔬生鲜 商店超市 鲜花绿植 医药健康 早餐 午餐 下午茶 晚餐夜宵
+          star: 4.3, //评分星级
+          desc: "欢迎新老顾客光临", //商家描述
+          delivery: {
+            //配送信息：配送费，配送时间
+            price: 1.1,
+            time: 40
+          },
+          type: ["bao","pei"] // 保，票，赔
+        }
+      ]
+    }
+  }
+}
+</script>
+<style scoped>
+.el-main{
+    padding:0;
+}
+.container{
+    height: 100%;
+}
+.header{
+    height: 54px;
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 54px;
+}
+.location{
+    float: left;
+    font-size: 12px;
+}
+.search{
+    width:300px;
+    float: right;
+}
+.content{
+    text-align: center;
+}
+.sort{
+    position: relative;
+    display: inline-block;
+    background-color: #fff;
+    width:90%;
+    height: 100px;
+    text-align: left;
+    box-sizing: border-box;
+    padding:7px 10px 10px 7em;
+    border:1px solid #e6e6e6;
+}
+.sort span{
+    position: absolute;
+    font-size: 14px;
+    color: #999999;
+    left: 25px;
+    top: 15px;
+}
+.type{
+    margin:0px 16px;
+    height: 38px;
+    line-height: 38px;
+}
+.rstBox{
+    width: 90%;
+    background-color: #fff;
+    height: 100%;
+    border:1px solid #e6e6e6;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.rstBlock{
+    margin-right: 20px;
+    margin-left: 20px;
+    float: left;
+    padding: 20px;
+    width:320px;
+    height: 140px;
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+</style>
+
