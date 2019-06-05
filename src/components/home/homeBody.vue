@@ -236,10 +236,11 @@ export default {
   height: 100%;
 }
 .header {
+  width: 90%;
   height: 54px;
-  margin-left: 20px;
-  margin-right: 20px;
+  padding: 0;
   line-height: 54px;
+  margin: 0 auto;
 }
 .location {
   float: left;
