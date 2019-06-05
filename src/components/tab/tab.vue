@@ -4,25 +4,44 @@
       <li class="topItem">
         <img style="height:33px;margin-top:12px;margin-right:20px;" src="../../image/blmLogoSimple.png" alt>
       </li>
-      <li class="active topItem">
+      <li class="active topItem" @click="goHomePage">
         <a href="#">首页</a>
       </li>
-      <li class="topItem">
+      <li class="topItem" @click="goMyorder">
         <a href="#">我的订单</a>
       </li>
       <span class="rightnav">
-        <li class="topItem">
-          <span class="userName">userName</span>
+            <el-popover
+              ref="popover"
+              width="100"
+              :offset="100"
+              trigger="hover">
+              <ul>
+                <li>asd</li>
+                <li>cxvc</li>
+              </ul>
+            </el-popover>
+                <li class="topItem" v-popover:popover>
+          <span class="userName">username</span>
           <span class="icon">
             <i class="el-icon-arrow-down"></i>
           </span>
-        </li>
+          </li>
       </span>
     </ul>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods:{
+    goHomePage(){
+      this.$router.push({name: 'home'})
+    },
+    goMyorder(){
+      this.$router.push({name:"order"})
+    }
+  }
+};
 </script>
 <style scoped>
 .topbar {
