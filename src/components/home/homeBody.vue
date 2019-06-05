@@ -9,8 +9,7 @@
           placeholder="搜索商家,美食..."
           prefix-icon="el-icon-search"
           size="small"
-          v-model="search"
-        ></el-input>
+          v-model="search"></el-input>
       </div>
     </el-header>
     <el-main>
@@ -25,15 +24,25 @@
               <el-popover
               :ref="item.id"
               placement="right"
-              :title="item.name"
-              width="200"
+              width="250"
+              popper-class="popover"
+              open-delay="200"
               trigger="hover">
               <div>
-                  asd
+                  <div class="pop-top">
+                    <h3 class="pop-title">{{item.name}}</h3>
+                    <span class="pop-sort">{{item.sort}}</span>
+                  </div>
+                  <div class="pop-center">
+                    <span class="pop-deliveryPrice">配送费￥{{item.delivery.price}}</span>
+                    <span class="pop-deliveryTime">平均<span>{{item.delivery.time}}</span>分钟送达</span>
+                  </div>
+                  <div class="pop-bottom">
+                    <span class="pop-desc">{{item.desc}}</span>
+                  </div>
               </div>
 
               </el-popover>
-
 
             <div class="leftBlock">
               <div class="rstPic">
@@ -173,10 +182,59 @@ export default {
           type: ["bao", "pei"] // 保，票，赔
         }
       ]
-    };
+    }
+  },
+  methods:{
+    initData(){
+      this.getRst()
+    }
+  },
+  created(){
+    this.initData()
   }
 };
 </script>
+<style>
+.popover{
+  color:red;
+}
+.popover h3,.popover span{
+  margin: 0;
+  padding: 0;
+}
+.popover .pop-top{
+  margin-top: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.popover .pop-sort{
+  font-size: 12px;
+  color: #ccc;
+}
+.popover .pop-center{
+  background: #ccc;
+  height: 25px;
+  line-height: 25px;
+  font-size: 13px;
+}
+.popover .pop-center .pop-deliveryPrice{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-right: 1px solid #fff;
+}
+.popover .pop-center .pop-deliveryTime{
+  padding-left: 20px;
+}
+.popover .pop-center .pop-deliveryTime span{
+  color:red;
+}
+.popover .pop-bottom{
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+</style>
+
 <style scoped>
 .el-main {
   padding: 0;
