@@ -35,7 +35,7 @@
                   </div>
                   <div class="pop-center">
                     <span class="pop-deliveryPrice">配送费￥{{item.delivery.price}}</span>
-                    <span class="pop-deliveryTime">平均<span>{{item.delivery.time}}</span>分钟送达</span>
+                    <span class="pop-deliveryTime">平均<span v-if="item.delivery.time<45">{{item.delivery.time}}</span><span v-else>45+</span>分钟送达</span>
                   </div>
                   <div class="pop-bottom">
                     <span class="pop-desc">{{item.desc}}</span>
