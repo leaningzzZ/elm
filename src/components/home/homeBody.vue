@@ -69,24 +69,7 @@ export default {
   data() {
     return {
       search: "",
-      sortData: [
-        "全部商家",
-        "美食",
-        "快餐便当",
-        "特色菜系",
-        "异国料理",
-        "小吃夜宵",
-        "甜品饮品",
-        "果蔬生鲜",
-        "商店超市",
-        "鲜花绿植",
-        "医药健康",
-        "早餐",
-        "午餐",
-        "下午茶",
-        "晚餐",
-        "夜宵"
-      ],
+      sortData: [],
       rstData: [
         {
           name: "袁记肉夹馍", //商家名称
@@ -189,10 +172,20 @@ export default {
     },
     load(){
       // alert("!")
+    },
+    getSort(){
+      for(let i =0;i<this.rstData.length;i++){
+          let str = this.sortData;
+          if(str.indexOf(this.rstData[i].sort) == -1){
+            this.sortData.push(this.rstData[i].sort);
+          }
+      }
+      console.log("aa"+this.rstData)
     }
   },
   created(){
     this.initData()
+    this.getSort()
   }
 };
 </script>
@@ -264,7 +257,6 @@ export default {
   display: inline-block;
   background-color: #fff;
   width: 90%;
-  height: 100px;
   text-align: left;
   box-sizing: border-box;
   padding: 7px 10px 10px 7em;
