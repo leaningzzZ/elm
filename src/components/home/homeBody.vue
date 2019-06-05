@@ -19,14 +19,14 @@
           <el-link class="type" v-for="item in sortData" :key="item.id" target="_blank">{{item}}</el-link>
         </div>
 
-        <div class="rstBox">
+        <div class="rstBox" v-infinite-scroll="load">
           <div class="rstBlock" v-for="item in rstData" :key="item.id" v-popover="item.id">
               <el-popover
               :ref="item.id"
               placement="right"
               width="250"
               popper-class="popover"
-              open-delay="200"
+              :open-delay="200"
               trigger="hover">
               <div>
                   <div class="pop-top">
@@ -41,7 +41,6 @@
                     <span class="pop-desc">{{item.desc}}</span>
                   </div>
               </div>
-
               </el-popover>
 
             <div class="leftBlock">
@@ -186,7 +185,10 @@ export default {
   },
   methods:{
     initData(){
-      this.getRst()
+      // this.getRst()
+    },
+    load(){
+      // alert("!")
     }
   },
   created(){
@@ -195,24 +197,22 @@ export default {
 };
 </script>
 <style>
-.popover{
-  color:red;
-}
 .popover h3,.popover span{
   margin: 0;
   padding: 0;
 }
 .popover .pop-top{
   margin-top: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 5px;
 }
 .popover .pop-sort{
   font-size: 12px;
   color: #ccc;
 }
 .popover .pop-center{
-  background: #ccc;
+  margin-top: 10px;
+  background: #f2f2f2;
   height: 25px;
   line-height: 25px;
   font-size: 13px;
@@ -220,7 +220,7 @@ export default {
 .popover .pop-center .pop-deliveryPrice{
   padding-left: 20px;
   padding-right: 20px;
-  border-right: 1px solid #fff;
+  border-right: 1px solid #dddddd;
 }
 .popover .pop-center .pop-deliveryTime{
   padding-left: 20px;
@@ -229,7 +229,7 @@ export default {
   color:red;
 }
 .popover .pop-bottom{
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 12px;
 }
 
@@ -303,7 +303,7 @@ export default {
   /* border: 1px solid red; */
 }
 .rstBlock:hover{
-    background: #ccc;
+    background: #f5f5f5;
 }
 .leftBlock {
   color: #999;
