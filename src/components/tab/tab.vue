@@ -4,7 +4,7 @@
       <li class="topItem">
         <img style="height:33px;margin-top:12px;margin-right:20px;" src="../../image/blmLogoSimple.png" alt>
       </li>
-      <li class="active topItem" @click="goHomePage">
+      <li class="active topItem"  @click="goHomePage">
         <a href="#">首页</a>
       </li>
       <li class="topItem" @click="goMyorder">
@@ -14,7 +14,7 @@
             <el-popover
               ref="popover"
               width="100"
-              :offset="100"
+              placement="top-start"
               trigger="hover">
               <ul>
                 <li>asd</li>
@@ -44,6 +44,11 @@ export default {
 };
 </script>
 <style scoped>
+ul,li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 .topbar {
   width: 100%;
   list-style: none; /* 将默认的列表符号去掉 */

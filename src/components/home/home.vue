@@ -4,16 +4,13 @@
       <tab></tab>
     </div>
     <router-view></router-view>
-    <!-- <home-body class="homeBody"></home-body> -->
   </div>
 </template>
 <script>
 import tab from "../tab/tab";
-import homeBody from "./homeBody";
 export default {
   components: {
     tab,
-    homeBody
   }
 };
 </script>

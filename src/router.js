@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import homePage from "./components/home/homeBody"
-import orderPage from "./components/order/order"
+import orderPage from "./components/order/orderHome"
+import aboutMe from "./components/order/aboutMe"
+import myOrder from "./components/order/myOrder"
+import collect from "./components/order/Collecting"
+import adressManage from "./components/order/adressManage"
 Vue.use(Router)
 
 export default new Router({
@@ -20,7 +24,30 @@ export default new Router({
     {
       path:"/order",
       name:"order",
-      component:orderPage
-    }
+      component:orderPage,
+      children: [
+        {
+          path: 'aboutMe',
+          name:"aboutMe",
+          component:aboutMe
+        },
+        {
+          path:"myOrder",
+          name:"myOrder",
+          component:myOrder
+        },
+        {
+          path:"collect",
+          name:"collect",
+          component:collect
+        },
+        {
+          path:"adressManage",
+          name:"adressManage",
+          component:adressManage
+        },
+      ]
+    },
+    
   ]
 })
