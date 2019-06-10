@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import { api } from "./api/api";
+// import jsonp from "vue-jsonp"
+// Vue.use(jsonp)
+Vue.prototype.$api=api
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 new Vue({
