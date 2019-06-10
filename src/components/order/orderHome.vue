@@ -31,6 +31,9 @@ export default {
     };
   },
   methods:{
+    goPath(path){
+      this.$router.push({name: path})
+    }
   }
 };
 </script>
