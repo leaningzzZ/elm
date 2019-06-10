@@ -2,49 +2,44 @@
   <div class="container">
     <ul class="topbar">
       <li class="topItem">
-        <img style="height:33px;margin-top:12px;margin-right:20px;" src="../../image/blmLogoSimple.png" alt>
+        <img
+          style="height:33px;margin-top:12px;margin-right:20px;"
+          src="../../image/blmLogoSimple.png"
+          alt
+        >
       </li>
-      <li class="active topItem"  @click="goHomePage">
+      <li class="active topItem" @click="goHomePage">
         <a href="#">首页</a>
       </li>
       <li class="topItem" @click="goMyorder">
         <a href="#">我的订单</a>
       </li>
       <span class="rightnav">
-            <el-popover
-              ref="popover"
-              width="100"
-              placement="top-start"
-              trigger="hover">
-              <ul>
-                <li>asd</li>
-                <li>cxvc</li>
-              </ul>
-            </el-popover>
-                <li class="topItem" v-popover:popover>
+        <li class="topItem" v-popover:popover>
           <span class="userName">username</span>
           <span class="icon">
             <i class="el-icon-arrow-down"></i>
           </span>
-          </li>
+        </li>
       </span>
     </ul>
   </div>
 </template>
 <script>
 export default {
-  methods:{
-    goHomePage(){
-      this.$router.push({name: 'home'})
+  methods: {
+    goHomePage() {
+      this.$router.push({ name: "home" });
     },
-    goMyorder(){
-      this.$router.push({name:"order"})
+    goMyorder() {
+      this.$router.push({ name: "order" });
     }
   }
 };
 </script>
 <style scoped>
-ul,li{
+ul,
+li {
   margin: 0;
   padding: 0;
   list-style: none;
