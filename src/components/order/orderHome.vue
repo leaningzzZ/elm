@@ -5,24 +5,21 @@
         <el-menu-item index="1-1" class="nav" @click="goPath('aboutMe')">
          <i class="el-icon-s-home"></i>个人中心
         </el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-document"></i>
-            <span class="nav">我的订单</span>
-          </template>
-            <el-menu-item index="2-1" @click="goPath('myOrder')" style="min-width:170px;background-color:#f7f7f7;">近三个月订单</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="4-1" class="nav" @click="goPath('adressManage')"> 
-          <i class="el-icon-star-off"></i>地址管理
+        
+        <el-menu-item index="2-1" class="nav" @click="goPath('myOrder')"> 
+          <i class="el-icon-document"></i>我的订单
         </el-menu-item>
-        <el-menu-item index="5-1" class="nav" @click="goPath('collect')"> 
+        <el-menu-item index="3-1" class="nav" @click="goPath('adressManage')"> 
+          <i class="el-icon-s-flag"></i>地址管理
+        </el-menu-item>
+        <el-menu-item index="4-1" class="nav" @click="goPath('collect')"> 
             <i class="el-icon-star-off"></i>我的收藏
         </el-menu-item>
       </el-menu>
     </el-aside>
 
     <el-container>
-      <el-main style="  border: 1px solid black;">
+      <el-main>
         <router-view></router-view>
       </el-main>
     </el-container>
