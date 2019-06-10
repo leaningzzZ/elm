@@ -10,7 +10,7 @@
             <i class="el-icon-document"></i>
             <span class="nav">我的订单</span>
           </template>
-            <el-menu-item index="2-1" @click="goPath('myOrder')">近三个月订单</el-menu-item>
+            <el-menu-item index="2-1" @click="goPath('myOrder')" style="min-width:170px;background-color:#f7f7f7;">近三个月订单</el-menu-item>
         </el-submenu>
         <el-menu-item index="4-1" class="nav" @click="goPath('adressManage')"> 
           <i class="el-icon-star-off"></i>地址管理
