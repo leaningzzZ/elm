@@ -52,7 +52,7 @@
             </div>
             <div class="rightBlock" v-popover:popover>
               <span class="rstName">{{item.storeName}}</span>
-              <el-rate v-model="item.star" style="margin-top: 8px;" disabled></el-rate>
+              <el-rate v-model="item.storeComment" style="margin-top: 8px;" disabled></el-rate>
               <span
                 v-if="item.storeShippingFee!=0"
                 class="rstDeliveryPrice">配送费￥{{item.storeShippingFee}}元</span>
