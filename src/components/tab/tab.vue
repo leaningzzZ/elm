@@ -16,7 +16,7 @@
       </li>
       <span class="rightnav">
         <li class="topItem" v-popover:popover>
-          <span class="userName">username</span>
+          <span class="userName">你好，{{this.username}}</span>
           <span class="icon">
             <i class="el-icon-arrow-down"></i>
           </span>
@@ -27,6 +27,11 @@
 </template>
 <script>
 export default {
+  data(){
+    return {
+      username:""
+    }
+  },
   methods: {
     goHomePage() {
       this.$router.push({ name: "home" });
@@ -35,8 +40,11 @@ export default {
       this.$router.push({ name: "order" });
     },
     goPath(path){
-            this.$router.push({name: path})
+      this.$router.push({name: path})
     }
+  },
+  created(){
+    this.username=sessionStorage.getItem('username');
   }
 };
 </script>
