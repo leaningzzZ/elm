@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <div class="rstBox" v-infinite-scroll="load">
+    <div class="rstBox">
       <div class="rstBlock" v-for="item in rstData" :key="item.id" v-popover="item.id">
         <el-popover
           :ref="item.id"
