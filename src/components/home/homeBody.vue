@@ -19,7 +19,7 @@
           <el-link class="type" @click="showAllRst">全部商家</el-link>
           <el-link class="type" v-for="item in sortData" :key="item.storeId" target="_blank" @click="changeList(item.id)">{{item.name}}</el-link>
         </div>
-        <div class="rstBox" v-infinite-scroll="load">
+        <div class="rstBox">
           <div class="rstBlock" v-for="item in showListData" :key="item.storeId" v-popover="item.storeId">
               <el-popover
               :ref="item.storeId"
@@ -78,9 +78,6 @@ export default {
   methods:{
     initData(){
       this.getRst()
-    },
-    load(){
-      // alert("!")
     },
     getRst(){
       this.loading=true
@@ -213,13 +210,12 @@ export default {
 }
 
 .rstBlock {
-  /* float: left; */
   display: inline-block;
   padding: 20px;
   width: 25%;
   height: 140px;
   box-sizing: border-box;
-  /* border: 1px solid red; */
+  cursor: pointer;
 }
 .rstBlock:hover{
     background: #f5f5f5;
