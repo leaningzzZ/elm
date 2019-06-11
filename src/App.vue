@@ -14,9 +14,9 @@ export default {
   },
   data(){
     return {
-      isLogined:true
+      isLogined:sessionStorage.getItem('logined')
     }
-  }
+  },
 }
 </script>
 <style>

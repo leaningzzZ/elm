@@ -24,7 +24,7 @@
             <el-input class="input" v placeholder="请输入密码" v-model="loginData.pwd" show-password></el-input>
           </el-form-item>
           <el-form-item prop="submit">
-            <el-button class="button" type="success" @click="submit">登陆</el-button>
+            <el-button class="button" type="success" @click="login">登陆</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -38,13 +38,13 @@
           label-width="0px"
           class="loginForm">
           <el-form-item prop="name">
-            <el-input class="input" v-model="loginData.name" placeholder="请输入用户名"></el-input>
+            <el-input class="input" v-model="registData.name" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item prop="pwd">
-            <el-input class="input" v placeholder="请输入密码" v-model="loginData.pwd" show-password></el-input>
+            <el-input class="input" v placeholder="请输入密码" v-model="registData.pwd" show-password></el-input>
           </el-form-item>
           <el-form-item prop="submit">
-            <el-button class="button" type="success">完成注册</el-button>
+            <el-button class="button" type="success" @click="sign">完成注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -57,6 +57,10 @@ export default {
     return {
       disabled:true,
       loginData: {
+        name: "",
+        pwd: ""
+      },
+      registData:{
         name: "",
         pwd: ""
       },
@@ -75,9 +79,14 @@ export default {
       this.disabled = !this.disabled
 
     },
-    submit(){
+    login(){
       console.log(1)
-      this.$router.push({name: 'home'});
+      // this.$router.push({name: 'home'});
+      
+      this.$api.get("/user/login",this.loginData).then(res=>{
+        console.log(res)
+        sessionStorage.setItem('logined',true);
+      }).catch(sessionStorage.setItem('logined',true))
     }
   }
 };

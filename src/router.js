@@ -27,12 +27,12 @@ export default new Router({
       component:orderPage,
       children: [
         {
-          path: '/',
+          path: 'aboutMe',
           name:"aboutMe",
           component:aboutMe
         },
         {
-          path:"myOrder",
+          path:"/",
           name:"myOrder",
           component:myOrder
         },

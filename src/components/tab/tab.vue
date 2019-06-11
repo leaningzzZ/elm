@@ -33,6 +33,9 @@ export default {
     },
     goMyorder() {
       this.$router.push({ name: "order" });
+    },
+    goPath(path){
+            this.$router.push({name: path})
     }
   }
 };
