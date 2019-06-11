@@ -81,7 +81,7 @@ export default {
     },
     getRst(){
       this.loading=true
-      this.$api.get("http://120.77.82.124:8080/ele/index").then(res=>{
+      this.$api.get("/index").then(res=>{
         this.renderRst(res.data.data)
       })
     },
