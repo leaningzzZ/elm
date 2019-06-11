@@ -27,7 +27,7 @@ export default new Router({
       component:orderPage,
       children: [
         {
-          path: 'aboutMe',
+          path: '/',
           name:"aboutMe",
           component:aboutMe
         },
