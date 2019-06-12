@@ -133,7 +133,7 @@ export default {
               if(res.data=="success"){
                 this.$alert('注册成功', {
                   confirmButtonText: '立即登陆',
-                  callback: action => {
+                  callback: () => {
                     this.$router.go(0);
                   }
                 });
