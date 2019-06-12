@@ -44,7 +44,7 @@
           </el-form-item>
           <el-form-item label="位置" :label-width="formLabelWidth">
             <el-input
-              v-model="form.name"
+              v-model="form.region"
               autocomplete="off"
               style="width:200px;"
               placeholder="请输入小区、大厦或学校"
@@ -61,7 +61,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="addAdress">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -69,10 +69,15 @@
 </template>
 <script>
 export default {
+  created(){
+    this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
+      console.log(res)
+    })
+  },
   data() {
     return {
       addressBlockStyle: "",
-      radio: "先生",
+      radio: "男",
       addressData: [
         {
           name: "蔡",
@@ -99,10 +104,6 @@ export default {
         region: "",
         date1: "",
         date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
       },
       formLabelWidth: "120px"
     };
@@ -115,6 +116,13 @@ export default {
     addressBlockMouseLeave: function(event) {
       let el = event.currentTarget;
       el.style.border = "1px solid #ddd";
+    },
+    addAdress(){
+      this.dialogFormVisible = false;
+      // let formData={"address":this.form.region,"name":this.form.name,"gender":"男","telephone":123213,"user_id":sessionStorage.getItem('userId')}
+      this.$api.get("/address/add?json={'address':'sadas','name':'张三','gender':'男','telephone':'213','user_id':32}").then(res=>{
+        console.log(res)
+      })
     }
   }
 };
