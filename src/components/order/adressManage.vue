@@ -7,14 +7,14 @@
       <div
         class="addressBlock"
         v-for="item in addressData"
-        :key="item.id"
+        :key="item.address_id"
         @mouseout="addressBlockMouseLeave(($event))"
         @mouseover="addressBlockMouseOver(($event))"
         :style="addressBlockStyle">
         <span class="name">{{item.name}}</span>
-        <span class="sex">{{item.sex}}</span>
+        <span class="sex">{{item.gender}}</span>
         <span class="address">{{item.address}}</span>
-        <span class="phone">{{item.phone}}</span>
+        <span class="phone">{{item.telephone}}</span>
         <el-button type="text" style="padding:0;position:absolute;right:60px;top:20px;">修改</el-button>
         <el-button type="text" style="padding:0;position:absolute;right:20px;top:20px;">删除</el-button>
       </div>
@@ -52,7 +52,7 @@
           </el-form-item>
           <el-form-item label="手机号" :label-width="formLabelWidth">
             <el-input
-              v-model="form.name"
+              v-model="form.phone"
               autocomplete="off"
               style="width:150px;"
               placeholder="请输入手机号"
@@ -70,40 +70,18 @@
 <script>
 export default {
   created(){
-    this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
-      console.log(res)
-    })
+    this.getAdress()
   },
   data() {
     return {
       addressBlockStyle: "",
       radio: "男",
-      addressData: [
-        {
-          name: "蔡",
-          sex: "先生",
-          address: "安悦公寓",
-          phone: "13186196120"
-        },
-        {
-          name: "蔡",
-          sex: "先生",
-          address: "安悦公寓",
-          phone: "13186196120"
-        },
-        {
-          name: "蔡",
-          sex: "先生",
-          address: "安悦公寓",
-          phone: "13186196120"
-        }
-      ],
+      addressData: [],
       dialogFormVisible: false,
       form: {
         name: "",
         region: "",
-        date1: "",
-        date2: "",
+        phone: "",
       },
       formLabelWidth: "120px"
     };
@@ -119,9 +97,15 @@ export default {
     },
     addAdress(){
       this.dialogFormVisible = false;
-      // let formData={"address":this.form.region,"name":this.form.name,"gender":"男","telephone":123213,"user_id":sessionStorage.getItem('userId')}
-      this.$api.get("/address/add?json={'address':'sadas','name':'张三','gender':'男','telephone':'213','user_id':32}").then(res=>{
+      this.$api.get(`/address/add?json={"address":"${this.form.region}","name":"${this.form.name}","gender":"男","telephone":"${this.form.phone}","user_id":"${sessionStorage.getItem('userId')}"}`).then(res=>{
         console.log(res)
+        this.getAdress()
+      })
+    },
+    getAdress(){
+      this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
+        this.addressData=res.data;
+        console.log(this.addressData)
       })
     }
   }

@@ -129,7 +129,7 @@ export default {
     sign(){
       this.$refs["registForm"].validate((valid) => {
           if (valid) {
-            this.$api.get(`/user/register?userName=${this.registData.registname}&password=${this.registData.pwd}`).then(res=>{
+            this.$api.get(`/user/register?userName=${this.registData.registname}&password=${this.registData.registpassword}`).then(res=>{
               if(res.data=="success"){
                 this.$alert('注册成功', {
                   confirmButtonText: '立即登陆',
