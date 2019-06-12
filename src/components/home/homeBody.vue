@@ -20,7 +20,7 @@
           <el-link class="type" v-for="item in sortData" :key="item.storeId" target="_blank" @click="changeList(item.id)">{{item.name}}</el-link>
         </div>
         <div class="rstBox">
-          <div class="rstBlock" v-for="item in showListData" :key="item.storeId" v-popover="item.storeId">
+          <div class="rstBlock" v-for="item in showListData" :key="item.storeId" v-popover="item.storeId" @click="goRstDetail(item.storeId)">
               <el-popover
               :ref="item.storeId"
               placement="right"
@@ -105,6 +105,14 @@ export default {
     },
     showAllRst(){
       this.showListData=JSON.parse(JSON.stringify(this.rstData));
+    },
+    goRstDetail(id){
+      this.$router.push({
+        name:'rstDetail',
+        params:{
+          rstId:id
+        }
+      })
     }
   },
   created(){

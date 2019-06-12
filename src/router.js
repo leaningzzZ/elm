@@ -6,6 +6,7 @@ import aboutMe from "./components/order/aboutMe"
 import myOrder from "./components/order/myOrder"
 import collect from "./components/order/Collecting"
 import adressManage from "./components/order/adressManage"
+import rstDetail from "./components/home/rstDetail"
 Vue.use(Router)
 
 export default new Router({
@@ -48,6 +49,10 @@ export default new Router({
         },
       ]
     },
-    
+    {
+      path:"/rstDetail",
+      name:"rstDetail",
+      component:rstDetail
+    },
   ]
 })
