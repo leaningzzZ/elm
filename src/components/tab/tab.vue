@@ -17,9 +17,10 @@
       <span class="rightnav">
         <li class="topItem" v-popover:popover>
           <span class="userName">你好，{{this.username}}</span>
-          <span class="icon">
+          <!-- <span class="icon">
             <i class="el-icon-arrow-down"></i>
-          </span>
+          </span> -->
+          <span class="out" @click="out">退出登陆</span>
         </li>
       </span>
     </ul>
@@ -41,6 +42,10 @@ export default {
     },
     goPath(path){
       this.$router.push({name: path})
+    },
+    out(){
+      sessionStorage.clear();
+      this.$router.go(0);
     }
   },
   created(){
@@ -91,7 +96,16 @@ li {
 .userName {
   color: #fff;
 }
-.icon {
+.out{
+  font-size: 14px;
+  color: #fff;
+  margin-left:20px;
+  cursor: pointer;
+}
+.out:hover{
+  color:cornflowerblue
+}
+/* .icon {
   color: #d5efff;
   margin-left: 8px;
   margin-right: 3px;
@@ -101,5 +115,5 @@ li {
   text-align: center;
   font-size: 20px;
   vertical-align: middle;
-}
+} */
 </style>
