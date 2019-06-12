@@ -8,7 +8,7 @@
     </el-header>
     <el-main>
       <!-- 登陆表单 -->
-      <div class="login" v-if="disabled">
+      <div class="login" v-show="disabled">
         <img style="width:220px" src="../../image/blmLogo.png" alt="eleme">
         <el-form
           :model="loginData"
@@ -33,7 +33,7 @@
         </el-form>
       </div>
       <!-- 注册表单 -->
-      <div class="sign" v-else>
+      <div class="sign" v-show="!disabled">
         <img style="width:220px" src="../../image/blmLogo.png" alt="eleme">
         <el-form
           :model="registData"
@@ -41,11 +41,11 @@
           :rules="registRules"
           ref="registForm"
           class="loginForm">
-          <el-form-item prop="name">
-            <el-input class="input" v-model="registData.name" placeholder="请输入用户名"></el-input>
+          <el-form-item prop="registname">
+            <el-input class="input" v-model="registData.registname" placeholder="请输入用户名"></el-input>
           </el-form-item>
-          <el-form-item prop="pwd">
-            <el-input class="input" v placeholder="请输入密码" v-model="registData.pwd" show-password></el-input>
+          <el-form-item prop="registpassword">
+            <el-input class="input" v placeholder="请输入密码" v-model="registData.registpassword" show-password></el-input>
           </el-form-item>
           <el-form-item prop="submit">
             <el-button class="button" type="success" @click="sign">完成注册</el-button>
@@ -65,8 +65,8 @@ export default {
         password: ""
       },
       registData: {
-        name: "",
-        pwd: ""
+        registname: "",
+        registpassword: ""
       },
       loginRules:{
           userName: [
@@ -79,11 +79,11 @@ export default {
           ],
       },
       registRules:{
-          name: [
+          registname: [
             { required: true, message: '请输入用户名',trigger: 'blur'},
             { min: 6, max: 18, message: '长度在 6 到 18 个字符',trigger: 'blur'}
           ],
-          pwd: [
+          registpassword: [
             { required: true, message: '请输入密码',trigger: 'blur'},
             { min: 6, max: 18, message: '长度在 6 到 18 个字符',trigger: 'blur'}
           ],
@@ -124,20 +124,27 @@ export default {
         });
     },
     sign(){
-      this.$api.get(`/user/register?userName=${this.registData.name}&password=${this.registData.pwd}`).then(res=>{
-        if(res.data=="success"){
-          this.$alert('注册成功', {
-            confirmButtonText: '立即登陆',
-            callback: action => {
-              this.$router.go(0);
-            }
-          });
-        }else if(res.data=="fail"){
-          this.$alert('请换个用户名试试',"注册失败",{
-            confirmButtonText: '确定',
-          });
-        }
-      })
+      this.$refs["registForm"].validate((valid) => {
+          if (valid) {
+            this.$api.get(`/user/register?userName=${this.registData.name}&password=${this.registData.pwd}`).then(res=>{
+              if(res.data=="success"){
+                this.$alert('注册成功', {
+                  confirmButtonText: '立即登陆',
+                  callback: action => {
+                    this.$router.go(0);
+                  }
+                });
+              }else if(res.data=="fail"){
+                this.$alert('请换个用户名试试',"注册失败",{
+                  confirmButtonText: '确定',
+                });
+              }
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
     }
   }
 };
@@ -145,6 +152,8 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+
+  
   color: #fff;
 }
 .container {
