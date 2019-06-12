@@ -52,7 +52,7 @@
           </el-form-item>
           <el-form-item label="手机号" :label-width="formLabelWidth">
             <el-input
-              v-model="form.name"
+              v-model="form.phone"
               autocomplete="off"
               style="width:150px;"
               placeholder="请输入手机号"
@@ -70,9 +70,7 @@
 <script>
 export default {
   created(){
-    this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
-      console.log(res)
-    })
+    this.getAdress()
   },
   data() {
     return {
@@ -102,8 +100,7 @@ export default {
       form: {
         name: "",
         region: "",
-        date1: "",
-        date2: "",
+        phone: "",
       },
       formLabelWidth: "120px"
     };
@@ -120,7 +117,13 @@ export default {
     addAdress(){
       this.dialogFormVisible = false;
       // let formData={"address":this.form.region,"name":this.form.name,"gender":"男","telephone":123213,"user_id":sessionStorage.getItem('userId')}
-      this.$api.get("/address/add?json={'address':'sadas','name':'张三','gender':'男','telephone':'213','user_id':32}").then(res=>{
+      console.log(sessionStorage.getItem('userId'))
+      this.$api.get(`/address/add?json={"address":"${this.form.region}","name":"${this.form.name}","gender":"男","telephone":"${this.form.phone}","user_id":${sessionStorage.getItem('userId')}}`).then(res=>{
+        console.log(res)
+      })
+    },
+    getAdress(){
+      this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
         console.log(res)
       })
     }
