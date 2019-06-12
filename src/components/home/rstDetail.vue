@@ -51,6 +51,21 @@
             style="position:absolute;bottom:10px;right:10px;"
           >加入购物车</el-button>
         </div>
+        <div class="message">
+          <div class="messageTitle">
+            <p>商家公告</p>
+          </div>
+          <div class="messageConcent">
+            <p>{{message}}</p>
+          </div>
+          <div class="messageDelivery">
+            <p>配送说明：</p>
+            <p>配送费￥{{rstData.price}}</p>
+          </div>
+          <div class="reportRst">
+            <p>举报商家</p>
+          </div>
+        </div>
       </div>
     </el-main>
   </el-container>
@@ -110,6 +125,8 @@ export default {
           price: 1.5
         }
       ],
+      message:
+        "大薯条或薯格买一送一限时优惠，同时全新推出和风牛丼饭套餐，更有多款下午茶套餐，伴你度过悠然的下午时光，美味缤纷停不下来！店铺优惠与折扣不同享",
       storeId: "",
       loading: true
     };
@@ -210,6 +227,7 @@ p {
   margin-bottom: 12px;
 }
 .food {
+  position: relative;
   width: 1260px;
   margin-left: auto;
   margin-right: auto;
@@ -241,7 +259,7 @@ p {
   margin-top: 10px;
   float: left;
   font-size: 14px;
-  width: 1000px;
+  width: 200px;
   font-weight: 800;
   color: #333333;
 }
@@ -255,9 +273,52 @@ p {
 .foodBlockPrice {
   margin-top: 13px;
   float: left;
-  width: 1000px;
+  width: 200px;
   font-size: 14px;
   color: #f74342;
   font-weight: 800;
+}
+.message {
+  color: #fff;
+  position: absolute;
+  right: 50px;
+  top: 44px;
+  width: 278px;
+  height: 322px;
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+.messageTitle {
+  background-color: #0089dc;
+  height: 45px;
+  line-height: 45px;
+  font-size: 16px;
+}
+.messageTitle p {
+  padding-left: 16px;
+}
+.messageConcent {
+  color: #333333;
+  font-size: 14px;
+  padding: 10px 15px 10px 15px;
+  background-color: #fff;
+  line-height: 2;
+}
+.messageDelivery {
+  padding: 10px 15px 10px 15px;
+  color: #333333;
+  font-size: 14px;
+}
+.messageDelivery :first-child {
+  font-weight: 900;
+}
+.reportRst {
+  text-align: center;
+  font-size: 18px;
+  color: #666666;
+  height: 55px;
+  line-height: 55px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
 }
 </style>
