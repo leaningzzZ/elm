@@ -106,7 +106,7 @@ export default {
     login() {
       this.$refs["loginForm"].validate((valid) => {
           if (valid) {
-            this.$api.get(`/user/login?userName=${this.loginData.userName}&password=${this.loginData.registpassword}`).then(res => {
+            this.$api.get(`/user/login?userName=${this.loginData.userName}&password=${this.loginData.password}`).then(res => {
                 if (res.data != "") {
                   //登陆成功
                   sessionStorage.setItem("logined", true);
