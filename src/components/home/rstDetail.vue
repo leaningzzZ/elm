@@ -69,11 +69,27 @@
         <div v-if="select == 'rate'" class="rate">
           <p>评价</p>
           <el-table :data="tableData" style="width: 850px">
-            <el-table-column prop="name" label="用户" width="140"></el-table-column>
-            <el-table-column prop="address" label="评价"></el-table-column>
-            <div v-for="item in tableData.foodRate" :key="item.id">
-              <span>{{item.name}}</span>
-            </div>
+            <el-table-column type="expand">
+              <template>
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <div v-for="item in (tableData[0].foodRate)" :key="item.id">
+                    <el-form-item style="font-size:14px;">
+                      <span>{{ item.name }}</span>
+                    </el-form-item>
+                    <el-form-item style="padding-top:10px;padding-left:30px;">
+                      <el-rate
+                        v-model="item.rate"
+                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                        show-text
+                        disabled
+                      ></el-rate>
+                    </el-form-item>
+                  </div>
+                </el-form>
+              </template>
+            </el-table-column>
+            <el-table-column label="用户" prop="name" width="120"></el-table-column>
+            <el-table-column label="评价" prop="rate"></el-table-column>
           </el-table>
         </div>
         <div class="message">
@@ -101,38 +117,42 @@ export default {
     return {
       tableData: [
         {
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          foodRate:[
+          name: "刘喆",
+          rate: "不好吃",
+          foodRate: [
             {
-              name:'手工馒头',
-              rate:5,
+              name: "经典麦辣鸡腿汉堡大套餐-椰子水饮 494ml",
+              rate: 5
             },
             {
-              name:'手工馒头',
-              rate:5,
+              name: "奥利奥麦旋风",
+              rate: 4
             },
             {
-              name:'手工馒头',
-              rate:5,
+              name: "经典麦辣鸡腿汉堡",
+              rate: 3
             },
             {
-              name:'手工馒头',
-              rate:5,
+              name: "经典麦辣鸡腿汉堡中套餐-大可乐 660ml",
+              rate: 2
             },
+            {
+              name: "海陆空经典三人餐",
+              rate: 1
+            }
           ]
         },
         {
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          name: "刘吉吉",
+          rate: "就那样"
         },
         {
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          name: "liuzhe",
+          rate: "一般般"
         },
         {
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          name: "liujiji",
+          rate: "还不如包包菜包包"
         }
       ],
       select: "food",
@@ -148,10 +168,10 @@ export default {
         logo:
           "//fuss10.elemecdn.com/e/63/23054dfca5d9e008fc0972a3306c9jpeg.jpeg?imageMogr2/thumbnail/95x95/format/webp/quality/85",
         name: "湖南土菜馆（大雁塔店）",
-        star: "5",
-        time: 45,
-        price: 0.1,
-        startPrice: 15,
+        star: 5,
+        time: "45",
+        price: "0.1",
+        startPrice: "15",
         isCollect: false
       },
       foodData: [
@@ -159,41 +179,41 @@ export default {
           logo:
             "//fuss10.elemecdn.com/2/db/2570a9ada62d6a42d77454da2c206jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
           name: "蛋炒饭",
-          star: "5",
+          star: 5,
           sale: "47",
-          price: 16
+          price: "16"
         },
         {
           logo:
             "//fuss10.elemecdn.com/9/cc/e2e26042378c6e8ad2e999e564455jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
           name: "酸辣土豆丝",
-          star: "3",
+          star: 3,
           sale: "45",
-          price: 12
+          price: "12"
         },
         {
           logo:
             "//fuss10.elemecdn.com/3/48/4c6fa697c07167181d3ac754e50f5jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
           name: "手工馒头",
-          star: "5",
+          star: 5,
           sale: "200",
-          price: 1.5
+          price: "1.5"
         },
         {
           logo:
             "//fuss10.elemecdn.com/3/48/4c6fa697c07167181d3ac754e50f5jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
           name: "手工馒头",
-          star: "5",
+          star: 5,
           sale: "200",
-          price: 1.5
+          price: "1.5"
         },
         {
           logo:
             "//fuss10.elemecdn.com/3/48/4c6fa697c07167181d3ac754e50f5jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
           name: "手工馒头",
-          star: "5",
+          star: 5,
           sale: "200",
-          price: 1.5
+          price: "1.5"
         }
       ],
       message:
@@ -400,6 +420,9 @@ p {
   font-size: 14px;
   color: #f74342;
   font-weight: 800;
+}
+.tableRow {
+  margin: 0;
 }
 .message {
   color: #fff;
