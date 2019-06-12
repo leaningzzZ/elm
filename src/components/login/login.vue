@@ -94,20 +94,23 @@ export default {
     goLogin: function() {
       this.registData.name="";
       this.registData.pwd="";
+      this.$refs["registForm"].resetFields();
       this.disabled = !this.disabled;
     },
     goSign: function() {
       this.loginData.userName="";
       this.loginData.password="";
+      this.$refs["loginForm"].resetFields();
       this.disabled = !this.disabled;
     },
     login() {
       this.$refs["loginForm"].validate((valid) => {
           if (valid) {
-            this.$api.get(`/user/login?userName=${this.loginData.userName}&password=${this.loginData.password}`).then(res => {
+            this.$api.get(`/user/login?userName=${this.loginData.userName}&password=${this.loginData.registpassword}`).then(res => {
                 if (res.data != "") {
                   //登陆成功
                   sessionStorage.setItem("logined", true);
+                  sessionStorage.setItem("userId", res.data.userId);
                   sessionStorage.setItem("username", this.loginData.userName);
                   this.$router.go(0);//设置seesion后刷新页面
                 } else {
@@ -126,7 +129,7 @@ export default {
     sign(){
       this.$refs["registForm"].validate((valid) => {
           if (valid) {
-            this.$api.get(`/user/register?userName=${this.registData.name}&password=${this.registData.pwd}`).then(res=>{
+            this.$api.get(`/user/register?userName=${this.registData.registname}&password=${this.registData.pwd}`).then(res=>{
               if(res.data=="success"){
                 this.$alert('注册成功', {
                   confirmButtonText: '立即登陆',
