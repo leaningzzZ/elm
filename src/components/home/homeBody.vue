@@ -78,6 +78,7 @@ export default {
   methods:{
     initData(){
       this.getRst()
+      console.log(this.rstData)
     },
     getRst(){
       this.loading=true
