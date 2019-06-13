@@ -31,7 +31,7 @@
               <div>
                   <div class="pop-top">
                     <h3 class="pop-title">{{item.storeName}}</h3>
-                    <span class="pop-sort">{{item.categoryId}}</span>
+                    <span class="pop-sort">{{item.categoryName}}</span>
                   </div>
                   <div class="pop-center">
                     <span class="pop-deliveryPrice">配送费￥{{item.storeShippingFee}}</span>
@@ -87,13 +87,16 @@ export default {
       })
     },
     renderRst(data){
+      console.log(data)
       data.forEach(element => {
         this.sortData.push({"name":element.categoryName,"id":element.categoryId})
         element.storeList.forEach(ele=>{
+          ele.categoryName=element.categoryName
           this.rstData.push(ele)
         })
       });
       this.showListData=JSON.parse(JSON.stringify(this.rstData));
+      console.log(this.showListData)
       this.loading=false
     },
     changeList(id){
@@ -118,7 +121,7 @@ export default {
   },
   created(){
     this.initData()
-  }
+  },
 };
 </script>
 <style>
