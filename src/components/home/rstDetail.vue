@@ -55,7 +55,7 @@
                 style="display:inline-block;float:left;line-height:20px;"
                 disabled
               ></el-rate>
-              <span class="foodBlockSale">月售{{item.sale}}份</span>
+              <span class="foodBlockSale">已售{{item.sale}}份</span>
               <span class="foodBlockPrice">￥{{item.price}}</span>
             </div>
             <el-button
