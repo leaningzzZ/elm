@@ -49,8 +49,8 @@
 export default {
   data() {
     return {
-      show: true,
-      shopCartWidth: "width:315px;",
+      show: false,
+      shopCartWidth: "width:35px;",
       goodData: [
         {
           rstName: "湖南土菜馆",
