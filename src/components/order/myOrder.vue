@@ -29,10 +29,15 @@
             @click="handleEdit(scope.$index, scope.row)"
             style="width:70px;height:25px;padding:0;margin-bottom:5px;"
           >订单详情</el-button>
-          
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="订单详情" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-main>
 </template>
 
@@ -40,6 +45,7 @@
 export default {
   data() {
     return {
+       dialogVisible: false,
       tableData: [
         {
           date: "2019-06-09",
@@ -75,13 +81,10 @@ export default {
   methods: {
     handleEdit(index, row) {
       console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
+      this.dialogVisible = true;
     }
   }
 };
 </script>
 <style scoped>
-
 </style>
