@@ -1,5 +1,5 @@
 <template>
-  <div class="addressBox">
+  <div class="addressBox" v-loading="loading">
     <div class="addressHeader">
       <div>地址管理</div>
     </div>
@@ -16,7 +16,7 @@
         <span class="address">{{item.address}}</span>
         <span class="phone">{{item.telephone}}</span>
         <el-button type="text" style="padding:0;position:absolute;right:60px;top:20px;">修改</el-button>
-        <el-button type="text" style="padding:0;position:absolute;right:20px;top:20px;">删除</el-button>
+        <el-button type="text" @click="deleteAdress(item.address_id)" style="padding:0;position:absolute;right:20px;top:20px;">删除</el-button>
       </div>
       <div
         class="newAddress"
@@ -83,6 +83,7 @@ export default {
         region: "",
         phone: "",
       },
+      loading:false,
       formLabelWidth: "120px"
     };
   },
@@ -98,7 +99,10 @@ export default {
     addAdress(){
       this.dialogFormVisible = false;
       this.$api.get(`/address/add?json={"address":"${this.form.region}","name":"${this.form.name}","gender":"男","telephone":"${this.form.phone}","user_id":"${sessionStorage.getItem('userId')}"}`).then(res=>{
-        console.log(res)
+        this.$notify.success({
+          message: '添加成功',
+          showClose: false
+        });
         this.getAdress()
       })
     },
@@ -106,6 +110,18 @@ export default {
       this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
         this.addressData=res.data;
         console.log(this.addressData)
+      })
+    },
+    deleteAdress(id){
+      this.loading=true
+      this.$api.get(`/address/delete?addressId=${id}`).then(res=>{
+        console.log(res)
+        this.loading=false;
+        this.$notify.success({
+          message: '删除成功',
+          showClose: false
+        });
+        this.getAdress()
       })
     }
   }
