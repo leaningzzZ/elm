@@ -8,14 +8,14 @@
         <ul class="goodBlock" v-for="(item,index) in goodData" :key="item.id">
           <span class="rstName">{{item.rstName}}</span>
           <li class="goodContent" v-for="good in goodData[index].goods" :key="good.id">
-              <span class="goodName">{{good.goodName}}</span>
-              <span class="goodNum">{{good.goodNum}}（份）</span>
-              <span class="price">￥{{good.price}}</span>
+            <span class="goodName">{{good.goodName}}</span>
+            <span class="goodNum">{{good.goodNum}}（份）</span>
+            <span class="price">￥{{good.price}}</span>
           </li>
         </ul>
       </div>
       <div class="check">
-        <el-button type="danger" size="small" style="width:260px;">去结算</el-button>
+        <el-button type="danger" @click="check" size="small" style="width:260px;">去结算</el-button>
       </div>
     </div>
 
@@ -43,12 +43,55 @@
         </div>
       </div>
     </div>
+
+    <el-dialog
+      title="确认支付"
+      :visible.sync="dialogFormVisible"
+      :modal="false"
+      width="30%"
+    >
+      <el-form :model="form">
+        <ul class="payGoodBlock" v-for="(item,index) in goodData" :key="item.id">
+          <span class="payRstName">{{item.rstName}}</span>
+          <li class="payGoodContent" v-for="good in goodData[index].goods" :key="good.id">
+            <span class="payGoodName">{{good.goodName}}</span>
+            <span class="payGoodNum">{{good.goodNum}}（份）</span>
+            <span class="payPrice">￥{{good.price}}</span>
+          </li>
+        </ul>
+        <p style="padding-left:32px;">收货地址</p>
+        <el-select v-model="form.region" placeholder="请选择收货地址" style="padding-left:30px;">
+          <el-option
+            v-for="item in addressData"
+            :key="item.id"
+            :value="item.address"
+            style="height:40px;padding-left:15px;line-height:24px;"
+          >{{item.address}}</el-option>
+        </el-select>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="finishPay">确认支付</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      formLabelWidth: "120px",
       show: false,
       shopCartWidth: "width:35px;",
       goodData: [
@@ -82,7 +125,8 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      addressData: []
     };
   },
   methods: {
@@ -108,7 +152,28 @@ export default {
         this.shopCartWidth = "width:35px;";
       }
     },
-    changeShow() {}
+    getAdress() {
+      this.$api
+        .get(`/address/get?userId=${sessionStorage.getItem("userId")}`)
+        .then(res => {
+          this.addressData = res.data;
+          console.log(this.addressData);
+        });
+    },
+    check() {
+      this.dialogFormVisible = true;
+      this.getAdress();
+    },
+    finishPay() {
+      if (this.form.region == "") {
+        this.$alert("请选择收货地址", "支付失败", {
+          confirmButtonText: "确定"
+        });
+      } else {
+        this.$alert('支付成功')
+        this.dialogFormVisible = false;
+      }
+    }
   }
 };
 </script>
@@ -119,10 +184,10 @@ li {
   margin: 0;
   list-style: none;
 }
-li{
-    height: 20px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+li {
+  height: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .hr {
   background-color: #737074;
@@ -166,7 +231,7 @@ li{
 .goodName {
   float: left;
   padding-left: 15px;
-  width:105px;
+  width: 105px;
 }
 .goodNum {
   float: left;
@@ -223,5 +288,35 @@ li{
   margin-left: 35px;
   width: 280px;
   background-color: #e6e6e6;
+}
+.payGoodBlock {
+  color: #666666;
+  font-size: 14px;
+  margin-left: 10px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+.payRstName {
+  display: block;
+  padding-top: 8px;
+  margin-left: 10px;
+  margin-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  border-bottom: #ddd 1px solid;
+}
+.payGoodName {
+  float: left;
+  padding-left: 35px;
+  width: 205px;
+}
+.payGoodNum {
+  float: left;
+}
+.payPrice {
+  float: right;
+  padding-right: 30px;
+  color: #f17539;
+  font-weight: 800;
 }
 </style>
