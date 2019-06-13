@@ -48,7 +48,7 @@
       title="确认支付"
       :visible.sync="dialogFormVisible"
       :modal="false"
-      width="30%"
+      width="500px"
     >
       <el-form :model="form">
         <ul class="payGoodBlock" v-for="(item,index) in goodData" :key="item.id">

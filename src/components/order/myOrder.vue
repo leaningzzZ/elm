@@ -1,7 +1,7 @@
 <template>
   <el-main>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="下单时间" width="150">
+      <el-table-column label="下单时间" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.date }}</span>
@@ -9,30 +9,39 @@
       </el-table-column>
       <el-table-column label="订单内容">
         <template slot-scope="scope">
-          <img :src="scope.row.logo" style="width:50px;">
+          <img :src="scope.row.src" style="width:50px;">
         </template>
       </el-table-column>
-      <el-table-column label="支付金额（元）" width="150">
+      <el-table-column label="支付金额（元）" width="200">
         <template slot-scope="scope">
-          <span style="font-weight:900">{{ scope.row.price }}</span>
+          <span style="font-weight:900">{{ scope.row.subTotal }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
-        <template slot-scope="scope">
-          <span style="font-size:12px;font-weight:400;color:#999999">{{ scope.row.state }}</span>
+      <el-table-column label="状态" width="150">
+        <template>
+          <span style="font-size:12px;font-weight:400;color:#999999">订单已完成</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="handleEdit(scope.$index, scope.row)"
             style="width:70px;height:25px;padding:0;margin-bottom:5px;"
           >订单详情</el-button>
-          
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="订单详情" :visible.sync="dialogVisible" width="800px">
+      <li v-for="item in orderData" :key="item.id">
+        <span class="Pname">{{item.Pname}}</span>
+        <span class="count">{{item.count}}(份)</span>
+        <span class="subTotal">￥{{item.subTotal}}</span>
+      </li>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </el-main>
 </template>
 
@@ -40,48 +49,88 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2019-06-09",
-          logo:
-            "//fuss10.elemecdn.com/f/01/64bfb5b626d7fe626f503aff8c42fpng.png?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
-          price: 10,
-          state: "订单已完成"
-        },
-        {
-          date: "2016-06-09",
-          logo:
-            "//fuss10.elemecdn.com/9/be/8ebac070b443fc77b99d176f4749apng.png?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
-          price: 10,
-          state: "订单已完成"
-        },
-        {
-          date: "2016-06-09",
-          logo:
-            "//fuss10.elemecdn.com/5/6f/d20254e5861009f9145c9bb5a08e9jpeg.jpeg?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
-          price: 10,
-          state: "订单已完成"
-        },
-        {
-          date: "2016-06-09",
-          logo:
-            "//fuss10.elemecdn.com/9/be/8ebac070b443fc77b99d176f4749apng.png?imageMogr2/thumbnail/140x140/format/webp/quality/85", //图标img地址
-          price: 10,
-          state: "订单已完成"
-        }
-      ]
+      dialogVisible: false,
+      loading: false,
+      tableData: [],
+      orderData: [],
+      orderIndex: ""
     };
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      this.dialogVisible = true;
+      this.orderIndex = this.tableData[index].ordersId;
+      console.log(this.orderIndex);
+      this.$api
+        .get(
+          `order/details?userId=${sessionStorage.getItem(
+            "userId"
+          )}&orderId=${this.orderIndex}`
+        )
+        .then(res => {
+          this.orderData = res.data[0].list;
+          console.log(this.orderData);
+          this.loading = false;
+        })
+        .catch(err => {
+          this.$notify.error({
+            title: "错误",
+            message: "获取数据失败，请稍后重试"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    initData() {
+      this.loading = true;
+      this.$api
+        .get(`order/late?userId=${sessionStorage.getItem("userId")}`)
+        .then(res => {
+          this.tableData = res.data;
+          console.log(this.tableData);
+          this.loading = false;
+        })
+        .catch(err => {
+          this.$notify.error({
+            title: "错误",
+            message: "获取数据失败，请稍后重试"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
+  },
+  created() {
+    this.initData();
   }
 };
 </script>
 <style scoped>
-
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+li {
+  height: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.Pname{
+  float: left;
+  width: 350px ;
+  margin-left: 20px;
+}
+.count{
+  float:left;
+}
+.subTotal{
+  float:right;
+  margin-right: 40px;
+  color: #f17539;
+  font-weight: 800;
+}
 </style>

@@ -50,7 +50,7 @@
       <div class="food">
         <div class="foodContent" v-if="select == 'food'">
           <p>全部商品</p>
-          <div class="foodBlock" v-for="item in foodData" :key="item.id">
+          <div class="foodBlock" v-for="(item,index) in foodData" :key="item.id">
             <img :src="item.src">
             <div class="foodMain">
               <span class="foodBlockName">{{item.Pname}}</span>
@@ -67,6 +67,7 @@
               round
               size="mini"
               style="position:absolute;bottom:10px;right:10px;"
+              @click="addShopCart(index)"
             >加入购物车</el-button>
           </div>
         </div>
