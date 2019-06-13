@@ -1,14 +1,14 @@
 <template>
-  <el-container>
+  <el-container v-loading="loading">
     <el-header class="header">
       <div class="headerContent">
         <div class="rstInformation">
           <div class="rst">
-            <img :src="rstData.logo">
+            <img :src="rstInfo.storeImage">
             <div class="rstDesc">
-              <span class="rstName">{{rstData.name}}</span>
+              <span class="rstName">{{rstInfo.storeName}}</span>
               <span class="star">
-                <el-rate v-model="rstData.star" style="margin-top: 8px;" disabled></el-rate>
+                <el-rate v-model="rstInfo.storeComment" style="margin-top: 8px;" disabled></el-rate>
               </span>
             </div>
           </div>
@@ -16,21 +16,25 @@
         <div class="delivery">
           <span class="deliveryTime">
             <p>平均送达速度</p>
-            <p>{{rstData.time}}分钟</p>
+            <p>{{rstInfo.storeTime}}分钟</p>
           </span>
           <span class="deliveryPrice">
             <p>配送费</p>
-            <p>配送费￥{{rstData.price}}</p>
+            <p>配送费￥{{rstInfo.storeShippingFee}}</p>
           </span>
-          <span class="deliveryStartPrice">
+          <!-- <span class="deliveryStartPrice">
             <p>起送价</p>
             <p>{{rstData.startPrice}}元</p>
-          </span>
-          <div class="collect" @click="collect">
+          </span> -->
+          <!-- <div class="collect" @click="collect">
             <i v-if="!rstData.isCollect" class="el-icon-star-off"></i>
             <i v-else class="el-icon-star-on"></i>
             <div v-if="!rstData.isCollect">收藏</div>
             <div v-else>取消收藏</div>
+          </div> -->
+          <div class="collect">
+            <i class="el-icon-star-off"></i>
+            <div >收藏</div>
           </div>
         </div>
       </div>
@@ -47,15 +51,15 @@
         <div class="foodContent" v-if="select == 'food'">
           <p>全部商品</p>
           <div class="foodBlock" v-for="item in foodData" :key="item.id">
-            <img :src="item.logo">
+            <img :src="item.src">
             <div class="foodMain">
-              <span class="foodBlockName">{{item.name}}</span>
+              <span class="foodBlockName">{{item.Pname}}</span>
               <el-rate
-                v-model="item.star"
+                v-model="item.comentMark"
                 style="display:inline-block;float:left;line-height:20px;"
                 disabled
               ></el-rate>
-              <span class="foodBlockSale">已售{{item.sale}}份</span>
+              <span class="foodBlockSale">已售{{item.Pcount}}份</span>
               <span class="foodBlockPrice">￥{{item.price}}</span>
             </div>
             <el-button
@@ -97,11 +101,11 @@
             <p>商家公告</p>
           </div>
           <div class="messageConcent">
-            <p>{{message}}</p>
+            <p>{{rstInfo.storeDesc}}</p>
           </div>
           <div class="messageDelivery">
             <p>配送说明：</p>
-            <p>配送费￥{{rstData.price}}</p>
+            <p>配送费￥{{rstInfo.storeShippingFee}}</p>
           </div>
           <div class="reportRst">
             <p>举报商家</p>
@@ -139,7 +143,7 @@ export default {
             {
               name: "海陆空经典三人餐",
               rate: 1
-            }
+            },
           ]
         },
         {
@@ -153,7 +157,7 @@ export default {
         {
           name: "liujiji",
           rate: "还不如包包菜包包"
-        }
+        },
       ],
       select: "food",
       foodStyle: {
@@ -164,62 +168,9 @@ export default {
         color: "#333333",
         borderBottom: "none"
       },
-      rstData: {
-        logo:
-          "//fuss10.elemecdn.com/e/63/23054dfca5d9e008fc0972a3306c9jpeg.jpeg?imageMogr2/thumbnail/95x95/format/webp/quality/85",
-        name: "湖南土菜馆（大雁塔店）",
-        star: 5,
-        time: "45",
-        price: "0.1",
-        startPrice: "15",
-        isCollect: false
-      },
-      foodData: [
-        {
-          logo:
-            "//fuss10.elemecdn.com/2/db/2570a9ada62d6a42d77454da2c206jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
-          name: "蛋炒饭",
-          star: 5,
-          sale: "47",
-          price: "16"
-        },
-        {
-          logo:
-            "//fuss10.elemecdn.com/9/cc/e2e26042378c6e8ad2e999e564455jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
-          name: "酸辣土豆丝",
-          star: 3,
-          sale: "45",
-          price: "12"
-        },
-        {
-          logo:
-            "//fuss10.elemecdn.com/3/48/4c6fa697c07167181d3ac754e50f5jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
-          name: "手工馒头",
-          star: 5,
-          sale: "200",
-          price: "1.5"
-        },
-        {
-          logo:
-            "//fuss10.elemecdn.com/3/48/4c6fa697c07167181d3ac754e50f5jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
-          name: "手工馒头",
-          star: 5,
-          sale: "200",
-          price: "1.5"
-        },
-        {
-          logo:
-            "//fuss10.elemecdn.com/3/48/4c6fa697c07167181d3ac754e50f5jpeg.jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85",
-          name: "手工馒头",
-          star: 5,
-          sale: "200",
-          price: "1.5"
-        }
-      ],
-      message:
-        "大薯条或薯格买一送一限时优惠，同时全新推出和风牛丼饭套餐，更有多款下午茶套餐，伴你度过悠然的下午时光，美味缤纷停不下来！店铺优惠与折扣不同享",
-      storeId: "",
-      loading: true
+      foodData: [],
+      rstInfo: "",
+      loading: false
     };
   },
   created() {
@@ -227,12 +178,28 @@ export default {
   },
   methods: {
     initData() {
-      this.storeId = this.$route.params.rstId;
-      console.log(this.storeId);
+      this.rstInfo = this.$route.params.rst;
+      this.getRstData(this.rstInfo.storeId)
+      console.log(this.rstInfo);
     },
-    collect() {
-      this.rstData.isCollect = !this.rstData.isCollect;
+    getRstData(id){
+      this.loading=true
+      this.$api.get(`product/list?storeId=${id}`).then(res=>{
+        this.foodData=res.data;
+        console.log(this.foodData)
+        this.loading=false
+      }).catch(err=>{
+        this.$notify.error({
+            title: "错误",
+            message: "获取数据失败，请稍后重试"
+          });
+      }).finally(()=>{
+        this.loading=false
+      })
     },
+    // collect() {
+    //   this.rstData.isCollect = !this.rstData.isCollect;
+    // },
     selectFood() {
       this.select = "food";
 
@@ -430,7 +397,6 @@ p {
   right: 50px;
   top: 44px;
   width: 278px;
-  height: 322px;
   border-radius: 2px 2px 0 0;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
 }

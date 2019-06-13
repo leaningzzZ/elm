@@ -20,7 +20,7 @@
           <el-link class="type" v-for="item in sortData" :key="item.storeId" target="_blank" @click="changeList(item.id)">{{item.name}}</el-link>
         </div>
         <div class="rstBox">
-          <div class="rstBlock" v-for="item in showListData" :key="item.storeId" v-popover="item.storeId" @click="goRstDetail(item.storeId)">
+          <div class="rstBlock" v-for="item in showListData" :key="item.storeId" v-popover="item.storeId" @click="goRstDetail(item)">
               <el-popover
               :ref="item.storeId"
               placement="right"
@@ -31,7 +31,7 @@
               <div>
                   <div class="pop-top">
                     <h3 class="pop-title">{{item.storeName}}</h3>
-                    <span class="pop-sort">{{item.categoryId}}</span>
+                    <span class="pop-sort">{{item.categoryName}}</span>
                   </div>
                   <div class="pop-center">
                     <span class="pop-deliveryPrice">配送费￥{{item.storeShippingFee}}</span>
@@ -87,13 +87,16 @@ export default {
       })
     },
     renderRst(data){
+      console.log(data)
       data.forEach(element => {
         this.sortData.push({"name":element.categoryName,"id":element.categoryId})
         element.storeList.forEach(ele=>{
+          ele.categoryName=element.categoryName
           this.rstData.push(ele)
         })
       });
       this.showListData=JSON.parse(JSON.stringify(this.rstData));
+      console.log(this.showListData)
       this.loading=false
     },
     changeList(id){
@@ -107,18 +110,18 @@ export default {
     showAllRst(){
       this.showListData=JSON.parse(JSON.stringify(this.rstData));
     },
-    goRstDetail(id){
+    goRstDetail(item){
       this.$router.push({
         name:'rstDetail',
         params:{
-          rstId:id
+          rst:item
         }
       })
     }
   },
   created(){
     this.initData()
-  }
+  },
 };
 </script>
 <style>
