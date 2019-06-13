@@ -67,7 +67,7 @@
               round
               size="mini"
               style="position:absolute;bottom:10px;right:10px;"
-              @click="addShopCart(index)"
+              @click="addTOShopCar(rstInfo.storeId,rstInfo.storeName,item.Pname,item.price,item.id)"
             >加入购物车</el-button>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default {
           name: "liujiji",
           rate: "还不如包包菜包包"
         },
-      ],
+      ],//评论
       select: "food",
       foodStyle: {
         color: "#0089DC",
@@ -176,13 +176,30 @@ export default {
   },
   created() {
     this.initData();
+    this.clearShopCar();//页面初始化，清空购物车
   },
   methods: {
     initData() {
       this.rstInfo = this.$route.params.rst;
       this.getRstData(this.rstInfo.storeId)
+      this.addTOShopCar(this.rstInfo.storeId,this.rstInfo.storeName)
       console.log(this.rstInfo);
     },
+    // getRstComment(id){
+    //   this.loading=true
+    //   this.$api.get(`comment/get?id=${id}`).then(res=>{
+    //     // this.foodData=res.data;
+    //     console.log(this.foodData)
+    //     this.loading=false
+    //   }).catch(err=>{
+    //     this.$notify.error({
+    //         title: "错误",
+    //         message: "获取数据失败，请稍后重试"
+    //       });
+    //   }).finally(()=>{
+    //     this.loading=false
+    //   })
+    // },
     getRstData(id){
       this.loading=true
       this.$api.get(`product/list?storeId=${id}`).then(res=>{
@@ -211,10 +228,28 @@ export default {
     },
     selectRate() {
       this.select = "rate";
+      this.getRstComment(this.rstInfo.storeId)
       this.foodStyle.color = "#333333";
       this.foodStyle.borderBottom = "none";
       this.rateStyle.color = "#0089DC";
       this.rateStyle.borderBottom = "2px soild #0089DC";
+    },
+    addTOShopCar(rstId,rstName,Pname,Pprice,Pid){
+      let params={
+        "pInfo":{
+          "name":Pname,
+          "id":Pid,
+          "price":Pprice,
+        },
+        "rstInfo":{
+        "rstName":rstName,
+        "rstId":rstId
+        }
+      }
+      this.$store.commit("addIntoShopCar",params)
+    },
+    clearShopCar(){
+      this.$store.commit("clearShopCar")
     }
   }
 };
