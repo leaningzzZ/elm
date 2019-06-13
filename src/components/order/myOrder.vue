@@ -29,11 +29,7 @@
             @click="handleEdit(scope.$index, scope.row)"
             style="width:70px;height:25px;padding:0;margin-bottom:5px;"
           >订单详情</el-button>
-          <el-button
-            size="mini"
-            @click="handleDelete(scope.$index, scope.row)"
-            style="width:70px;height:25px;margin:0;padding:0;"
-          >再来一份</el-button>
+          
         </template>
       </el-table-column>
     </el-table>
