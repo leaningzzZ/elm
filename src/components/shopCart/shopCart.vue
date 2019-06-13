@@ -48,11 +48,11 @@
       title="确认支付"
       :visible.sync="dialogFormVisible"
       :modal="false"
-      width="30%">
+      width="500px">
       <el-form :model="form">
         <ul class="payGoodBlock">
           <span class="payRstName">{{goodData.rstName}}</span>
-          <li class="payGoodContent" v-for="good in goodData" :key="good.id">
+          <li class="payGoodContent" v-for="good in goodData.rstItem" :key="good.id">
             <span class="payGoodName">{{good.name}}</span>
             <span class="payGoodNum">1（份）</span>
             <span class="payPrice">￥{{good.price}}</span>
