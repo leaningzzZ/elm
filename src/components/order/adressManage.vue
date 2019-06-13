@@ -29,8 +29,8 @@
         </span>
       </div>
       <el-dialog title="添加新地址" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
-          <el-form-item label="姓名" :label-width="formLabelWidth">
+        <el-form :model="form" :rules="rules" ref="ruleForm">
+          <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
             <el-input
               v-model="form.name"
               autocomplete="off"
@@ -38,11 +38,13 @@
               placeholder="请输入您的姓名"
             ></el-input>
           </el-form-item>
-          <el-form-item label="性别" :label-width="formLabelWidth">
-            <el-radio v-model="radio" label="先生">先生</el-radio>
-            <el-radio v-model="radio" label="女士">女士</el-radio>
+          <el-form-item label="性别" :label-width="formLabelWidth" prop="sex">
+            <el-radio-group v-model="radio">
+              <el-radio :label="1">先生</el-radio>
+              <el-radio :label="2">女士</el-radio>
+            </el-radio-group>
           </el-form-item>
-          <el-form-item label="位置" :label-width="formLabelWidth">
+          <el-form-item label="位置" :label-width="formLabelWidth" prop="region">
             <el-input
               v-model="form.region"
               autocomplete="off"
@@ -50,9 +52,9 @@
               placeholder="请输入小区、大厦或学校"
             ></el-input>
           </el-form-item>
-          <el-form-item label="手机号" :label-width="formLabelWidth">
+          <el-form-item label="手机号" :label-width="formLabelWidth"             prop="phone">
             <el-input
-              v-model="form.phone"
+              v-model.number="form.phone"
               autocomplete="off"
               style="width:150px;"
               placeholder="请输入手机号"
@@ -61,7 +63,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addAdress">确 定</el-button>
+          <el-button type="primary" @click="addAdress('ruleForm')">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -75,7 +77,8 @@ export default {
   data() {
     return {
       addressBlockStyle: "",
-      radio: "男",
+      radio: 1,
+      sex:1,
       addressData: [],
       dialogFormVisible: false,
       form: {
@@ -84,7 +87,20 @@ export default {
         phone: "",
       },
       loading:false,
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      rules:{
+        name:[
+          {required: true, message: '请输入姓名', trigger: 'blur'}
+        ],
+        region:[
+          {required: true, message: '请输入收货地址', trigger: 'blur'}
+        ],
+        phone:[
+          {required:true,message:'请输入手机号码',trigger:'blur'},
+          {type:"number",message:"请输入数字"}
+        ]
+
+      }
     };
   },
   methods: {
@@ -96,15 +112,23 @@ export default {
       let el = event.currentTarget;
       el.style.border = "1px solid #ddd";
     },
-    addAdress(){
-      this.dialogFormVisible = false;
-      this.$api.get(`/address/add?json={"address":"${this.form.region}","name":"${this.form.name}","gender":"男","telephone":"${this.form.phone}","user_id":"${sessionStorage.getItem('userId')}"}`).then(res=>{
-        this.$notify.success({
-          message: '添加成功',
-          showClose: false
-        });
-        this.getAdress()
-      })
+    addAdress(formname){
+      this.$refs[formname].validate((valid) => {
+        if (valid) {
+          this.dialogFormVisible = false;
+          if(this.radio==1){this.sex="先生"}else if(this.radio==2){this.sex="女士"}
+          this.$api.get(`/address/add?json={"address":"${this.form.region}","name":"${this.form.name}","gender":"${this.sex}","telephone":"${this.form.phone}","user_id":"${sessionStorage.getItem('userId')}"}`).then(res=>{
+            this.$notify.success({
+              message: '添加成功',
+              showClose: false
+            });
+            this.getAdress()
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
     getAdress(){
       this.$api.get(`/address/get?userId=${sessionStorage.getItem('userId')}`).then(res=>{
