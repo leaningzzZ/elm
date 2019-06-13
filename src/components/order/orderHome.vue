@@ -12,9 +12,6 @@
         <el-menu-item index="3-1" class="nav" @click="goPath('adressManage')"> 
           <i class="el-icon-s-flag"></i>地址管理
         </el-menu-item>
-        <el-menu-item index="4-1" class="nav" @click="goPath('collect')"> 
-            <i class="el-icon-star-off"></i>我的收藏
-        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

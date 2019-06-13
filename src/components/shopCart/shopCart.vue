@@ -5,12 +5,12 @@
         <span>购物车</span>
       </div>
       <div class="goods">
-        <ul class="goodBlock" v-for="(item,index) in goodData" :key="item.id">
-          <span class="rstName">{{item.rstName}}</span>
-          <li class="goodContent" v-for="good in goodData[index].goods" :key="good.id">
-            <span class="goodName">{{good.goodName}}</span>
-            <span class="goodNum">{{good.goodNum}}（份）</span>
-            <span class="price">￥{{good.price}}</span>
+        <ul class="goodBlock">
+          <span class="rstName">{{goodData.rstName}}</span>
+          <li class="goodContent" v-for="good in goodData.rstItem" :key="good.id">
+              <span class="goodName">{{good.name}}</span>
+              <span class="goodNum">1（份）</span>
+              <span class="price">￥{{good.price}}</span>
           </li>
         </ul>
       </div>
@@ -48,14 +48,13 @@
       title="确认支付"
       :visible.sync="dialogFormVisible"
       :modal="false"
-      width="500px"
-    >
+      width="30%">
       <el-form :model="form">
-        <ul class="payGoodBlock" v-for="(item,index) in goodData" :key="item.id">
-          <span class="payRstName">{{item.rstName}}</span>
-          <li class="payGoodContent" v-for="good in goodData[index].goods" :key="good.id">
-            <span class="payGoodName">{{good.goodName}}</span>
-            <span class="payGoodNum">{{good.goodNum}}（份）</span>
+        <ul class="payGoodBlock">
+          <span class="payRstName">{{goodData.rstName}}</span>
+          <li class="payGoodContent" v-for="good in goodData" :key="good.id">
+            <span class="payGoodName">{{good.name}}</span>
+            <span class="payGoodNum">1（份）</span>
             <span class="payPrice">￥{{good.price}}</span>
           </li>
         </ul>
@@ -94,40 +93,14 @@ export default {
       formLabelWidth: "120px",
       show: false,
       shopCartWidth: "width:35px;",
-      goodData: [
-        {
-          rstName: "湖南土菜馆",
-          goods: [
-            {
-              goodName: "蛋炒饭",
-              goodNum: "1",
-              price: "1"
-            },
-            {
-              goodName: "馒头",
-              goodNum: "1",
-              price: "2"
-            }
-          ]
-        },
-        {
-          rstName: "湖南土菜馆",
-          goods: [
-            {
-              goodName: "蛋炒饭",
-              goodNum: "1",
-              price: "1"
-            },
-            {
-              goodName: "馒头",
-              goodNum: "1",
-              price: "2"
-            }
-          ]
-        }
-      ],
+      // goodData: {},
       addressData: []
     };
+  },
+  computed:{
+    goodData(){
+      return this.$store.state.shopData;
+    }
   },
   methods: {
     buttonOver: function(event) {

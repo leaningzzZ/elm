@@ -6,7 +6,7 @@
               <img src="https://shadow.elemecdn.com/faas/desktop/media/img/default-avatar.38e40d.png?imageMogr2/format/webp/quality/85" alt="">
             </div>
             <div class="personal">
-              <h3 class="name">你好，+username</h3>
+              <h3 class="name">你好,{{userName}}</h3>
               <span class="tips">订餐了吗？提前订餐送的快！</span>
             </div>
           </div>
@@ -97,10 +97,13 @@ border-bottom: 2px solid #f4f4f4;
 export default {
   data() {
     return {
-
+      userName:""
     }
   },
   methods:{
+  },
+  created(){
+    this.userName=sessionStorage.getItem('username');
   }
 };
 </script>
